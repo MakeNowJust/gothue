@@ -2,7 +2,7 @@ package rewriter
 
 // implementation of Stringer for TextRewriter
 func (tr *TextRewriter) String() string {
-	return tr.Text
+	return string(tr.Text)
 }
 
 // implementation of Stringer for WriteRewriter

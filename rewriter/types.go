@@ -2,7 +2,7 @@ package rewriter
 
 // this type is a basic rewriter, such as `rule::=text`.
 type TextRewriter struct {
-	Text string
+	Text []byte
 }
 
 // this type is a writer, such as `rule::=~text`.
