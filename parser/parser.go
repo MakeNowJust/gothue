@@ -8,7 +8,6 @@ import (
 import (
 	"fmt"
 	"strings"
-	"unicode"
 )
 
 type parseState int
@@ -29,10 +28,10 @@ func Parse(source string) (pgrm *program.Program, err error) {
 			rule := strings.SplitN(line, "::=", 2)
 			switch len(rule) {
 			case 2:
-				name := strings.TrimFunc(rule[0], unicode.IsSpace)
-				text := strings.TrimLeftFunc(rule[1], unicode.IsSpace)
-				if name == "" {
-					if text != "" {
+				name := rule[0]
+				text := rule[1]
+				if strings.TrimSpace(name) == "" {
+					if strings.TrimSpace(text) != "" {
 						err = fmt.Errorf("parse error: malformed rule! (line at %d)", row)
 						return
 					}
@@ -53,15 +52,15 @@ func Parse(source string) (pgrm *program.Program, err error) {
 					action = &rewriter.ReadRewriter{}
 				} else { // replace text
 					action = &rewriter.TextRewriter{
-						Text: text,
+						Text: []byte(text),
 					}
 				}
 				rules = append(rules, &program.Rule{
-					Name:   name,
+					Name:   []byte(name),
 					Action: action,
 				})
 			default:
-				if strings.TrimFunc(line, unicode.IsSpace) != "" {
+				if strings.TrimSpace(line) != "" {
 					err = fmt.Errorf("parse error: malformed rule! (line at %d)", row)
 					return
 				}
@@ -72,7 +71,7 @@ func Parse(source string) (pgrm *program.Program, err error) {
 	}
 	pgrm = &program.Program{
 		Rules: rules,
-		Data:  strings.Join(data, "\n") + "\n",
+		Data:  []byte(strings.Join(data, "\n") + "\n"),
 	}
 	return
 }
