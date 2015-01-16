@@ -19,22 +19,22 @@ func (r *Rule) String() string {
 	return fmt.Sprintf("%s::=%v", r.Name, r.Action)
 }
 
-// implementation of Stringer for TextReplacer
-func (tr *TextReplacer) String() string {
+// implementation of Stringer for TextRewriter
+func (tr *TextRewriter) String() string {
 	return tr.Text
 }
 
-// implementation of Stringer for WriteReplacer
-func (wr *WriteReplacer) String() string {
+// implementation of Stringer for WriteRewriter
+func (wr *WriteRewriter) String() string {
 	return "~" + wr.Text
 }
 
-// implementation of Stringer for NewlineReplacer
-func (_ *NewlineReplacer) String() string {
+// implementation of Stringer for NewlineRewriter
+func (_ *NewlineRewriter) String() string {
 	return "~"
 }
 
-// implementation of Stringer for ReadReplacer
-func (_ *ReadReplacer) String() string {
+// implementation of Stringer for ReadRewriter
+func (_ *ReadRewriter) String() string {
 	return ":::"
 }
