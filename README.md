@@ -26,6 +26,18 @@ And if you had set `$PATH` to `$GOPATH/bin`, to be avaiable to `gothue` command.
 
 ```console
 $ gothue -h
+gothue - Thue interpreter written in Go
+
+usage:
+  gothue [-s=<seed>] [-lrdh] <file name>
+
+option:
+  -l         execute leftmost matches first
+  -r         execute rightmost matches first
+  -d         debug mode
+  -s=<seed>  set a seed (default is current unix time)
+  -h         show this help
+$ gothue _example/hello.t # what text happen printing???  it is randomly.
 ```
 
 
