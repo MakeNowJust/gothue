@@ -19,6 +19,10 @@ const (
 
 // Parse and convert from source to program structure of Thue
 func Parse(source string) (pgrm *program.Program, err error) {
+	if len(source) > 0 && source[len(source)-1] == '\n' {
+		source = source[:len(source)-1]
+	}
+
 	rules := []*program.Rule{}
 	data := []string{}
 	state := parseRule
@@ -32,7 +36,7 @@ func Parse(source string) (pgrm *program.Program, err error) {
 				text := rule[1]
 				if strings.TrimSpace(name) == "" {
 					if strings.TrimSpace(text) != "" {
-						err = fmt.Errorf("parse error: malformed rule! (line at %d)", row)
+						err = fmt.Errorf("parse error: malformed rule (line at %d)", row+1)
 						return
 					}
 					state = parseData
@@ -61,7 +65,7 @@ func Parse(source string) (pgrm *program.Program, err error) {
 				})
 			default:
 				if strings.TrimSpace(line) != "" {
-					err = fmt.Errorf("parse error: malformed rule! (line at %d)", row)
+					err = fmt.Errorf("parse error: malformed rule (line at %d)", row+1)
 					return
 				}
 			}
@@ -69,9 +73,15 @@ func Parse(source string) (pgrm *program.Program, err error) {
 			data = append(data, line)
 		}
 	}
+
+	if state != parseData {
+		err = fmt.Errorf("parse error: not terminated a rulebase")
+		return
+	}
+
 	pgrm = &program.Program{
 		Rules: rules,
-		Data:  []byte(strings.Join(data, "\n") + "\n"),
+		Data:  []byte(strings.Join(data, "\n")),
 	}
 	return
 }
