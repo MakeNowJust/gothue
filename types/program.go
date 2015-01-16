@@ -9,26 +9,26 @@ type Program struct {
 // this type is the rule of the Thue.
 type Rule struct {
 	Name   string
-	Action Rewiter
+	Action Rewriter
 }
 
 // this type is an rewrite action of the Thue.
-type Rewiter interface {
-	Replace(left, right string) string
+type Rewriter interface {
+	Rewrite(left, right string) (string, error)
 }
 
 // this type is a basic rewriter, such as `rule::=text`.
-type TextRewiter struct {
+type TextRewriter struct {
 	Text string
 }
 
 // this type is a writer, such as `rule::=~text`.
-type WriteRewiter struct {
+type WriteRewriter struct {
 	Text string
 }
 
 // this type is a newline writer, such as `rule::=~`.
-type NewlineRewiter struct{}
+type NewlineRewriter struct{}
 
 // this type is a reader, such as `rule::=:::`.
-type ReadRewiter struct{}
+type ReadRewriter struct{}

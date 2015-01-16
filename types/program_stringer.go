@@ -5,7 +5,7 @@ import "fmt"
 // implementation of Stringer for Program
 func (p *Program) String() string {
 	str := ""
-	for rule := range p.Rules {
+	for _, rule := range p.Rules {
 		str += rule.String() + "\n"
 	}
 	str += "::=\n"
