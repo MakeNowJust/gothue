@@ -29,7 +29,7 @@ func debugPrint(debug bool, format string, args ...interface{}) {
 func Interpret(pgrm *program.Program, choice ChoiceMode, debug bool) (data []byte, err error) {
 	data = pgrm.Data
 	for {
-		debugPrint(debug, ">>> data: %s", data)
+		debugPrint(debug, "data: %s", data)
 		dataLen := len(data)
 		leftIndex := mathutil.MaxInt
 		rightIndex := mathutil.MinInt
@@ -86,7 +86,7 @@ func Interpret(pgrm *program.Program, choice ChoiceMode, debug bool) (data []byt
 			match = matches[rand.Intn(len(matches))]
 		}
 
-		debugPrint(debug, ">>> match (%d..%d): %s -> %s", match.index, match.index+len(match.rule.Name), match.rule.Name, match.rule.Action)
+		debugPrint(debug, "match (%d..%d): %s -> %s", match.index, match.index+len(match.rule.Name), match.rule.Name, match.rule.Action)
 
 		if data, err = match.rule.Action.Rewrite(data[:match.index], data[match.index+len(match.rule.Name):]); err != nil {
 			return
